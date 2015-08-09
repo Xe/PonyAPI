@@ -51,7 +51,10 @@ def _base_get(endpoint, *fragments):
         if r.status_code != 200:
             raise Exception("Not found or server error")
 
-        return r.json()
+        try:
+            return r.json()["episodes"]
+        except:
+            return r.json()["episode"]
 
     return doer
 
@@ -78,4 +81,4 @@ def search(query):
     if r.status_code != 200:
         raise Exception("Not found or server error")
 
-    return r.json()
+    return r.json()["episodes"]
