@@ -24,6 +24,11 @@ This represents Season 1, Episode 1 of My Little Pony: Friendship Is Magic. The
 shown on The Hub (now Discovery Family Network). If `is_movie` is set and the
 season number is `99`, the episode record should be treated as a movie.
 
+Usage Limits
+------------
+
+None. Don't make the server it's running on crash and we'll all be good.
+
 Clients
 -------
 
@@ -36,7 +41,7 @@ The canonical route base for PonyAPI is http://ponyapi.apps.xeserv.us. Example
 usage:
 
 ```console
-curl http://ponyapi.apps.xeserv.us/season/1/episode/1
+$ curl http://ponyapi.apps.xeserv.us/season/1/episode/1
 {
   "episode": {
     "air_date": 1286735400,
