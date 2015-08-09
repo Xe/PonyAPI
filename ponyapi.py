@@ -1,6 +1,6 @@
 import os
 import random
-from flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request, redirect
 
 # An Episode is constructed as such:
 # data Episode = Episode
@@ -34,7 +34,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Welcome to the Pony API!"
+    return redirect("https://github.com/Xe/PonyAPI#ponyapi", code=302)
 
 @app.route("/all")
 def all_episodes():
