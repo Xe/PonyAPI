@@ -28,7 +28,7 @@ Available methods:
 
 API_ENDPOINT = "http://ponyapi.apps.xeserv.us"
 
-## _base_get :: Text -> IO (Either (Maybe Episode) [Episode])
+## _base_get :: Text -> Maybe [Text] -> IO (Either (Maybe Episode) [Episode])
 def _base_get(endpoint, *fragments):
     def doer(*args):
         r = None
@@ -67,7 +67,7 @@ get_season = _base_get("", "season")
 # get_episode :: Int -> Int -> IO Episode
 get_episode = _base_get("", "season", "episode")
 
-# search :: String -> IO [Episode]
+# search :: Text -> IO [Episode]
 def search(query):
     params = {"q": query}
     r = requests.get(API_ENDPOINT + "/search", params=params)
