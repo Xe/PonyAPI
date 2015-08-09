@@ -70,7 +70,7 @@ def show_random_ep():
 @app.route("/search")
 def search():
     retEpisodes = []
-    term = request.args.get("q", "")
+    term = request.args.get("q", "").lower()
 
     try:
         assert term != ""
