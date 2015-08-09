@@ -32,7 +32,7 @@ None. Don't make the server it's running on crash and we'll all be good.
 Clients
 -------
 
-None yet
+- [Python](https://github.com/Xe/PonyAPI/blob/master/client/ponyapi.py)
 
 Routes
 ------
