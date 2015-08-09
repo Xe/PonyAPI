@@ -28,7 +28,10 @@ Available methods:
 
 API_ENDPOINT = "http://ponyapi.apps.xeserv.us"
 
-## _base_get :: Text -> Maybe [Text] -> IO (Either (Maybe Episode) [Episode])
+# _base_get :: Text -> Maybe [Text] -> (Maybe [Text] -> IO (Either Episode [Episode]))
+# _base_get takes a text, a splatted list of texts and returns a function such that
+#     the function takes a splatted list of texts and returns either an Episode or
+#     a list of Episode as an IO action.
 def _base_get(endpoint, *fragments):
     def doer(*args):
         r = None
