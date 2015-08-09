@@ -58,6 +58,10 @@ $ curl http://ponyapi.apps.xeserv.us/season/1/episode/1
 Returns all information about all episodes. This returns an array of Episode
 objects as defined above.
 
+### `/newest`
+
+Returns the episode of My Little Pony: Friendship is Magic that will air next.
+
 ### `/season/<number>`
 
 Returns all information about episodes in the given season number or a `404`

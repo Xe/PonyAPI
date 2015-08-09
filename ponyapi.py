@@ -1,5 +1,7 @@
+import datetime
 import os
 import random
+
 from flask import Flask, abort, jsonify, request, redirect
 
 # An Episode is constructed as such:
@@ -39,6 +41,17 @@ def hello():
 @app.route("/all")
 def all_episodes():
     return jsonify(episodes=episodes)
+
+@app.route("/newest")
+def newest_episode():
+    now = datetime.datetime(2006, 1, 4)
+    now = now.now()
+
+    for episode in episodes:
+        if now.fromtimestamp(episode["air_date"]) > now:
+            return jsonify(episode=episode)
+
+    abort(500)
 
 @app.route("/season/<number>")
 def season(number):
