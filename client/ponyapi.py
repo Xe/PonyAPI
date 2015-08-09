@@ -67,6 +67,7 @@ get_season = _base_get("", "season")
 # get_episode :: Int -> Int -> IO Episode
 get_episode = _base_get("", "season", "episode")
 
+# search :: String -> IO [Episode]
 def search(query):
     params = {"q": query}
     r = requests.get(API_ENDPOINT + "/search", params=params)
