@@ -1,6 +1,6 @@
 import os
 import random
-from flask import Flask, abort, jsonify
+from flask import Flask, abort, jsonify, request
 
 # An Episode is constructed as such:
 # data Episode = Episode
@@ -69,7 +69,24 @@ def show_random_ep():
 
 @app.route("/search")
 def search():
-    abort(500)
+    retEpisodes = []
+    term = request.args.get("q", "")
+
+    try:
+        assert term != ""
+    except:
+        abort(406)
+
+    for episode in episodes:
+        if term in episode["name"].lower():
+            retEpisodes.append(episode)
+
+    try:
+        assert len(retEpisodes) > 0
+    except:
+        abort(404)
+
+    return jsonify(episodes=retEpisodes)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
