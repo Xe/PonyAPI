@@ -61,7 +61,7 @@ def show_random_ep():
 
 @app.route("/search")
 def search():
-    return 500, "Not implemented yet"
+    abort(500)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
