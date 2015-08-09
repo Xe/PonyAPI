@@ -55,6 +55,14 @@ def season(number):
 
     return jsonify(episodes=retEpisodes)
 
+@app.route("/season/<snumber>/episode/<epnumber>")
+def show_episode(snumber, epnumber):
+    for episode in episodes:
+        if str(episode["season"]) == snumber and str(episode["episode"]) == epnumber:
+            return jsonify(episode=episode)
+
+    abort(404)
+
 @app.route("/random")
 def show_random_ep():
     return jsonify(episode=random.choice(episodes))
