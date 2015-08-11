@@ -1,4 +1,5 @@
 import requests
+import time
 
 """
 # PonyAPI module for Python programs
@@ -20,6 +21,7 @@ Available methods:
 
     all_episodes() -> return all information on all episodes
     newest() -> return information on the newest episode
+    last_aired() -> returns the episode that most recently aired
     random() -> return a random episode
     get_season(snum) -> return all episodes in season snum
     get_episode(snum, enum) -> return info on season snum episode enum
@@ -82,3 +84,12 @@ def search(query):
         raise Exception("Not found or server error")
 
     return r.json()["episodes"]
+
+# last_aired :: IO Episode
+# TODO: Does not know how to wrap around seasons, fix this
+def last_aired():
+    new = newest()
+
+    if new[u"air_date"] > int(time.time()):
+        return get_episode(new[u"season"], (new[u"episode"]-1))
+    return new
