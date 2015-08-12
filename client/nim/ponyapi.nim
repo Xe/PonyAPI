@@ -1,3 +1,4 @@
+import cgi
 import httpclient
 import json
 
@@ -48,6 +49,9 @@ proc all_episodes*(): seq[Episode] =
 proc get_season*(season: int): seq[Episode] =
   getJson("/season/" & $season)["episodes"].newEpisodeListFromNode
 
+proc search*(term: string): seq[Episode] =
+  getJson("/search?q=" & term.encodeURL())["episodes"].newEpisodeListFromNode
+
 when isMainModule:
   import unittest
 
@@ -92,3 +96,14 @@ when isMainModule:
       except:
         echo getCurrentExceptionMsg()
         fail
+
+    test "search for pony":
+      try:
+        var eps = search("pony")
+
+        assert eps.len > 0
+
+      except:
+        echo getCurrentExceptionMsg()
+        fail
+
