@@ -3,11 +3,11 @@ import json
 
 type
   Episode* = object of RootObj
-    name: string
-    air_date: int
-    season: int
-    episode: int
-    is_movie: bool
+    name*: string
+    air_date*: int
+    season*: int
+    episode*: int
+    is_movie*: bool
 
 const
   API_ENDPOINT: string = "http://ponyapi.apps.xeserv.us"
