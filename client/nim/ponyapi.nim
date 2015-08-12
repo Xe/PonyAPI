@@ -19,19 +19,21 @@ proc getJson(endpoint: string): json.JsonNode =
 
   return jsonTable
 
+proc newEpisodeFromNode(data: json.JsonNode): Episode =
+  Episode(name:     data["name"].getStr,
+          air_date: data["air_date"].getNum.int,
+          season:   data["season"].getNum.int,
+          episode:  data["episode"].getNum.int,
+          is_movie: data["is_movie"].getBVal)
+
 proc newest*(): Episode =
-  var
-    data = getJson("/newest")["episode"]
-    ep = Episode(name:     data["name"].getStr,
-                 air_date: data["air_date"].getNum.int,
-                 season:   data["season"].getNum.int,
-                 episode:  data["episode"].getNum.int,
-                 is_movie: data["is_movie"].getBVal)
+  getJson("/newest")["episode"].newEpisodeFromNode
 
-  return ep
+proc random*(): Episode =
+  getJson("/random")["episode"].newEpisodeFromNode
 
-proc `$`*(ep: Episode): string =
-  return "Episode:: name:" & ep.name & " season:" & $ep.season & " episode:" & $ep.episode & " air_date:" & $ep.air_date & " is_movie:" & $ep.is_movie
+proc get_episode*(season, episode: int): Episode =
+  getJson("/season/" & $season & "/episode/" & $episode)["episode"].newEpisodeFromNode
 
 when isMainModule:
   import unittest
@@ -49,3 +51,10 @@ when isMainModule:
 
     test "stringify episode":
       echo ep
+
+    test "random episode":
+      echo random()
+
+    test "get episode":
+      var myEp = get_episode(2, 14) # best episode
+      assert myEp.name == "The Last Roundup"
