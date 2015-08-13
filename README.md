@@ -34,7 +34,7 @@ Clients
 
 - [Go](https://godoc.org/github.com/Xe/PonyAPI/client/go)
 - [Nim](https://github.com/Xe/PonyAPI/blob/master/client/nim/ponyapi.nim) [Docs](http://ponyapi.apps.xeserv.us/static/nim.html)
-- [Python](https://github.com/Xe/PonyAPI/blob/master/client/ponyapi.py)
+- [Python](https://github.com/Xe/PonyAPI/blob/master/client/python/ponyapi.py)
 
 Routes
 ------
