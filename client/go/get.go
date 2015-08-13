@@ -56,26 +56,33 @@ func getEpisodes(fragment string) ([]*Episode, error) {
 	return eswr.Episodes, nil
 }
 
+// Newest returns information on the newest episode or an error.
 func Newest() (*Episode, error) {
 	return getEpisode("/newest")
 }
 
+// Random returns information on a random episode.
 func Random() (*Episode, error) {
 	return getEpisode("/random")
 }
 
+// GetEpisode gets information about season x episode y or an error.
 func GetEpisode(season, episode int) (*Episode, error) {
 	return getEpisode(fmt.Sprintf("/season/%d/episode/%d", season, episode))
 }
 
+// AllEpisodes gets all information on all episodes or returns an error.
 func AllEpisodes() ([]*Episode, error) {
 	return getEpisodes("/all")
 }
 
+// GetSeason returns all information on season x or returns an error.
 func GetSeason(season int) ([]*Episode, error) {
 	return getEpisodes(fmt.Sprintf("/season/%d", season))
 }
 
+// Search takes the give search terms and uses that to search the
+// list of episodes.
 func Search(query string) ([]*Episode, error) {
 	path, err := url.Parse("/search")
 	if err != nil {
