@@ -3,4 +3,4 @@
 set -e
 set -x
 
-nim c -r ponyapi
+python ./test.py

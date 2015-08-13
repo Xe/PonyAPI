@@ -13,12 +13,8 @@ type
     episode*: int   ## the episode number in the season
     is_movie*: bool ## does this record represent a movie?
 
-when defined(isTesting):
-  const
-    API_ENDPOINT: string = "http://127.0.0.1:5000"
-else:
-  const
-    API_ENDPOINT: string = "http://ponyapi.apps.xeserv.us"
+const
+  API_ENDPOINT: string = "http://ponyapi.apps.xeserv.us"
 
 proc getJson(endpoint: string): json.JsonNode =
   ## get the HTTP body for the API base endpoint catted with the specific endpoint

@@ -3,4 +3,4 @@
 set -e
 set -x
 
-nim c -r ponyapi
+go test -v .
