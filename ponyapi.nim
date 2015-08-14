@@ -126,14 +126,13 @@ routes:
   get "/search":
     var
       query = @"q".toLower
-      eps: seq[Episode]
 
     if query == "":
       halt Http406, myHeaders, $ %* { "error": "Need to specify query" }
 
-    for episode in episodes:
-      if episode.name.toLower.contains query:
-        eps = eps & episode
+    var
+      eps: seq[Episode] =
+        lc[x | (x <- episodes, x.name.toLower.contains query), Episode]
 
     if eps.len == 0:
       resp Http404, myHeaders, $ %* { "error": "No episodes found" }
