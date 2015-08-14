@@ -130,6 +130,9 @@ routes:
       query = @"q".toLower
       eps: seq[Episode]
 
+    if query == "":
+      halt Http406, myHeaders, $ %* { "error": "Need to specify query" }
+
     for episode in episodes:
       if episode.name.toLower.contains query:
         eps = eps & episode
