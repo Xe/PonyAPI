@@ -1,5 +1,7 @@
 FROM coopernurse/docker-nim
 
+RUN apk update && apk add bash
+
 EXPOSE 5000
 RUN adduser -D -g '' r
 RUN chmod a+x /root/.nimble/bin/nimble
