@@ -1,5 +1,5 @@
 build:
-	nim c -d:release --deadcodeElim:on --hints:off ponyapi
+	nim c --deadcodeElim:on --hints:off ponyapi
 
 run: build
 	./ponyapi

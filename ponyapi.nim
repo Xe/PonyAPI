@@ -1,3 +1,4 @@
+import asyncdispatch
 import jester
 import json
 import strutils
@@ -32,4 +33,39 @@ for line in lines "./fim.list":
 
   episodes = episodes & ep
 
-echo episodes
+proc `%`(ep: Episode): JsonNode =
+  %*
+    {
+      "name": ep.name,
+      "air_date": ep.air_date,
+      "season": ep.season,
+      "episode": ep.episode,
+      "is_movie": ep.is_movie,
+    }
+
+proc `%`(eps: seq[Episode]): JsonNode =
+  var ret = newJArray()
+
+  for ep in episodes:
+    add ret, %ep
+
+  ret
+
+settings:
+  port = 5000.Port
+  bindAddr = "0.0.0.0"
+
+routes:
+  get "/":
+    "http://github.com/Xe/PonyAPI".uri.redirect
+
+  get "/all":
+    let headers = {"Content-Type": "application/json"}
+    var rep = %*
+      {
+        "episodes": episodes,
+      }
+
+    resp Http200, headers, pretty(rep, 4)
+
+runForever()
