@@ -1,14 +1,15 @@
-FROM python:2.7.10
+FROM coopernurse/docker-nim
 
-RUN adduser --disabled-password --gecos '' r
-ADD ./requirements.txt /app/requirements.txt
-WORKDIR /app
-
-RUN pip install -r ./requirements.txt
+EXPOSE 5000
+RUN adduser -D -g '' r
+RUN chmod a+x /root/.nimble/bin/nimble
 
 ADD . /app
 
-EXPOSE 5000
+WORKDIR /app
+RUN nimble update &&\
+    yes | nimble install &&\
+    nim c -d:release --deadCodeElim:on ponyapi
 
 USER r
-CMD gunicorn ponyapi:app --log-file=- -b 0.0.0.0:5000 -w 4
+CMD ./ponyapi
