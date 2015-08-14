@@ -7,4 +7,4 @@ license       = "MIT"
 bin           = "ponyapi"
 
 [Deps]
-Requires: "nim >= 0.10.0, jester#head"
+Requires: "nim >= 0.10.0, jester#head, random#head"

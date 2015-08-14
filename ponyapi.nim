@@ -1,7 +1,10 @@
 import asyncdispatch
+import future
 import jester
 import json
+import random
 import strutils
+import times
 
 type
   Episode* = object of RootObj
@@ -46,10 +49,27 @@ proc `%`(ep: Episode): JsonNode =
 proc `%`(eps: seq[Episode]): JsonNode =
   var ret = newJArray()
 
-  for ep in episodes:
+  for ep in eps:
     add ret, %ep
 
   ret
+
+proc `%%`(ep: Episode): JsonNode =
+  %*
+    {
+      "episode": ep,
+    }
+
+proc `%%`(eps: seq[Episode]): JsonNode =
+  %*
+    {
+      "episodes": eps,
+    }
+
+let myHeaders = {
+  "Content-Type": "application/json",
+  "X-Powered-By": "Nim and Jester",
+}
 
 settings:
   port = 5000.Port
@@ -60,12 +80,63 @@ routes:
     "http://github.com/Xe/PonyAPI".uri.redirect
 
   get "/all":
-    let headers = {"Content-Type": "application/json"}
-    var rep = %*
-      {
-        "episodes": episodes,
-      }
+    resp Http200, myHeaders, pretty(%%episodes, 4)
 
-    resp Http200, headers, pretty(rep, 4)
+  get "/newest":
+    var
+      now = getTime()
+      ep: Episode
+
+    for episode in episodes:
+      var then = times.fromSeconds(episode.air_date)
+
+      if now < then:
+        ep = episode
+        break
+
+    resp Http200, myHeaders, pretty(%%ep, 4)
+
+  get "/random":
+    resp Http200, myHeaders, pretty(%%episodes.randomChoice(), 4)
+
+  get "/season/@snumber":
+    var
+      season: int = @"snumber".parseInt
+      eps: seq[Episode] = lc[x | (x <- episodes, x.season == season), Episode]
+
+    if eps.len == 0:
+      resp Http404, myHeaders, $ %* { "error": "No episodes found" }
+    else:
+      resp Http200, myHeaders, pretty(%%eps, 4)
+
+  get "/season/@snumber/episode/@epnumber":
+    var
+      season: int = @"snumber".parseInt
+      enumber: int = @"epnumber".parseInt
+      ep: Episode
+
+    for episode in episodes:
+      if episode.season == season:
+        if episode.episode == enumber:
+          ep = episode
+
+    if ep.air_date == 0:
+      resp Http404, myHeaders, $ %* {"error": "No such episode"}
+    else:
+      resp Http200, myHeaders, pretty(%%ep, 4)
+
+  get "/search":
+    var
+      query = @"q".toLower
+      eps: seq[Episode]
+
+    for episode in episodes:
+      if episode.name.toLower.contains query:
+        eps = eps & episode
+
+    if eps.len == 0:
+      resp Http404, myHeaders, $ %* { "error": "No episodes found" }
+    else:
+      resp Http200, myHeaders, pretty(%%eps, 4)
 
 runForever()
