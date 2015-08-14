@@ -47,12 +47,10 @@ proc `%`(ep: Episode): JsonNode =
     }
 
 proc `%`(eps: seq[Episode]): JsonNode =
-  var ret = newJArray()
+  result = newJArray()
 
   for ep in eps:
-    add ret, %ep
-
-  ret
+    add result, %ep
 
 proc `%%`(ep: Episode): JsonNode =
   %*
