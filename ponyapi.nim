@@ -1,19 +1,11 @@
 import asyncdispatch
+import episode
 import future
 import jester
 import json
 import random
 import strutils
 import times
-
-type
-  Episode* = object of RootObj
-    ## An episode of My Little Pony: Friendship is Magic
-    name*: string   ## Episode name
-    air_date*: int  ## Air date in unix time
-    season*: int    ## season number of the episode
-    episode*: int   ## the episode number in the season
-    is_movie*: bool ## does this record represent a movie?
 
 var
   episodes: seq[Episode]
@@ -36,32 +28,25 @@ for line in lines "./fim.list":
 
   episodes = episodes & ep
 
-proc `%`(ep: Episode): JsonNode =
-  %*
-    {
-      "name": ep.name,
-      "air_date": ep.air_date,
-      "season": ep.season,
-      "episode": ep.episode,
-      "is_movie": ep.is_movie,
-    }
-
-proc `%`(eps: seq[Episode]): JsonNode =
-  result = newJArray()
-
-  for ep in eps:
-    add result, %ep
-
 proc `%%`(ep: Episode): JsonNode =
+  ## Pack an episode for PonyAPI clients.
   %*
     {
       "episode": ep,
     }
 
 proc `%%`(eps: seq[Episode]): JsonNode =
+  ## Pack a sequence of episodes to a JsonNode for PonyAPI clients.
   %*
     {
       "episodes": eps,
+    }
+
+proc `%!`(why: string): JsonNode =
+  ## Make an error object
+  %*
+    {
+      "error": why
     }
 
 let myHeaders = {
@@ -103,7 +88,7 @@ routes:
       eps: seq[Episode] = lc[x | (x <- episodes, x.season == season), Episode]
 
     if eps.len == 0:
-      resp Http404, myHeaders, $ %* { "error": "No episodes found" }
+      resp Http404, myHeaders, pretty(%!"No episodes found", 4)
     else:
       resp Http200, myHeaders, pretty(%%eps, 4)
 
@@ -119,7 +104,7 @@ routes:
           ep = episode
 
     if ep.air_date == 0:
-      resp Http404, myHeaders, $ %* {"error": "No such episode"}
+      resp Http404, myHeaders, pretty(%!"Not found", 4)
     else:
       resp Http200, myHeaders, pretty(%%ep, 4)
 
@@ -128,14 +113,14 @@ routes:
       query = @"q".toLower
 
     if query == "":
-      halt Http406, myHeaders, $ %* { "error": "Need to specify query" }
+      halt Http406, myHeaders, pretty(%!"Need to specify a query", 4)
 
     var
       eps: seq[Episode] =
         lc[x | (x <- episodes, x.name.toLower.contains query), Episode]
 
     if eps.len == 0:
-      resp Http404, myHeaders, $ %* { "error": "No episodes found" }
+      resp Http404, myHeaders, pretty(%!"No episodes found", 4)
     else:
       resp Http200, myHeaders, pretty(%%eps, 4)
 
