@@ -64,6 +64,11 @@ objects as defined above.
 
 Returns the episode of My Little Pony: Friendship is Magic that will air next.
 
+### `/last_aired`
+
+Returns the episode of My Little Pony: Friendship is Magic that most recently
+aired.
+
 ### `/season/<number>`
 
 Returns all information about episodes in the given season number or a `404`

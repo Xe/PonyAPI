@@ -85,6 +85,20 @@ routes:
   get "/random":
     resp Http200, myHeaders, pretty(%%episodes.randomChoice(), 4)
 
+  get "/last_aired":
+    var
+      now = getTime()
+      ep: Episode
+
+    for epid, episode in pairs[Episode](episodes):
+      var then = times.fromSeconds(episode.air_date)
+
+      if now < then:
+        ep = episodes[epid-1]
+        break
+
+    resp Http200, myHeaders, pretty(%%ep, 4)
+
   get "/season/@snumber":
     var
       season: int = @"snumber".parseInt
