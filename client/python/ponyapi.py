@@ -66,6 +66,9 @@ all_episodes = _base_get("/all")
 # newest :: IO Episode
 newest = _base_get("/newest")
 
+# last_aired :: IO Episode
+last_aired = _base_get("/last_aired")
+
 # random :: IO Episode
 random = _base_get("/random")
 
@@ -85,9 +88,9 @@ def search(query):
 
     return r.json()["episodes"]
 
-# last_aired :: IO Episode
+# last_aired_old :: IO Episode
 # TODO: Does not know how to wrap around seasons, fix this
-def last_aired():
+def last_aired_old():
     new = newest()
 
     if new[u"air_date"] > int(time.time()):
