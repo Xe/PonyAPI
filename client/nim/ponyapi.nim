@@ -44,6 +44,10 @@ proc newest*(): Episode =
   ## returns information on the newest episode of My Little Pony: Friendship is Magic.
   getJson("/newest")["episode"].newEpisodeFromNode
 
+proc last_aired*(): Episode =
+  ## returns information on the most recently aired episode of My Little Pony: Friendship is Magic.
+  getJson("/last_aired")["episode"].newEpisodeFromNode
+
 proc random*(): Episode =
   ## returns information on a random episode.
   getJson("/random")["episode"].newEpisodeFromNode
@@ -72,9 +76,17 @@ when isMainModule:
   suite "ponyapi tests":
     var ep: Episode
 
-    test "Newest episode lookup":
+    test "newest episode lookup":
       try:
         ep = newest()
+
+      except:
+        echo getCurrentExceptionMsg()
+        fail
+
+    test "last aired episode lookup":
+      try:
+        ep = last_aired()
 
       except:
         echo getCurrentExceptionMsg()
