@@ -3,6 +3,7 @@ import episode
 import future
 import jester
 import json
+import os
 import random
 import strutils
 import times
@@ -49,12 +50,10 @@ proc `%!`(why: string): JsonNode =
       "error": why
     }
 
-const gitHash = staticExec "git rev-parse HEAD"
-
 let myHeaders = {
   "Content-Type": "application/json",
   "X-Powered-By": "Nim and Jester",
-  "X-Git-Hash":   gitHash,
+  "X-Git-Hash":   getEnv("GIT_REV"),
 }
 
 settings:
