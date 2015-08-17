@@ -49,9 +49,12 @@ proc `%!`(why: string): JsonNode =
       "error": why
     }
 
+const gitHash = staticExec "git rev-parse HEAD"
+
 let myHeaders = {
   "Content-Type": "application/json",
   "X-Powered-By": "Nim and Jester",
+  "X-Git-Hash":   gitHash,
 }
 
 settings:
