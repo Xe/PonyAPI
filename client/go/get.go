@@ -61,6 +61,12 @@ func Newest() (*Episode, error) {
 	return getEpisode("/newest")
 }
 
+// LastAired returns information on the most recently aried episode
+// or an error.
+func LastAired() (*Episode, error) {
+	return getEpisode("/last_aired")
+}
+
 // Random returns information on a random episode.
 func Random() (*Episode, error) {
 	return getEpisode("/random")

@@ -11,6 +11,15 @@ func TestNewestEpisode(t *testing.T) {
 	t.Logf("%#v", ep)
 }
 
+func TestLastAiredEpisode(t *testing.T) {
+	ep, err := LastAired()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Logf("%#v", ep)
+}
+
 func TestRandomEpisode(t *testing.T) {
 	ep, err := Random()
 	if err != nil {
