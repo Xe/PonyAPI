@@ -1,0 +1,19 @@
+group 'us.xeserv'
+version '1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.google.code.gson:gson:+"
+    compile "org.apache.httpcomponents:httpclient:+"
+    compile "org.apache.httpcomponents:fluent-hc:+"
+    compile "com.google.guava:guava:+"
+    testCompile "junit:junit:+"
+}
