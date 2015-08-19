@@ -22,7 +22,7 @@ public class PonyApiExample {
         // Initialize a client with a custom API host
         PonyApiClient client = new PonyApiClient("some.fqdn.here"); // defaults to port 80
                       client = new PonyApiClient("some.fqdn.here", 8080); // with a custom port number
-        // Initialize a client using http://ponyapi.apps.xeserv.us/ as the API ohst
+        // Initialize a client using http://ponyapi.apps.xeserv.us/ as the API host
                       client = new PonyApiClient();
 
         // Get a list of all the episodes

@@ -33,7 +33,7 @@ public class PonyApiClientTest {
     @Test
     public void getSeasonTest() throws IOException {
         List<Episode> list = client.getSeason(98);
-        assertEquals(null, list);
+        assertNull(list);
         list = client.getSeason(1);
         assertEquals(26, list.size());
     }
@@ -46,22 +46,26 @@ public class PonyApiClientTest {
 
     @Test
     public void getEpisodeTest() throws IOException {
-        Episode episode = client.getEpisode(1, 1);
+        Episode episode = client.getEpisode(98, 1);
+        assertNull(episode);
+        episode = client.getEpisode(1, 1);
         assertEquals("Friendship is Magic Part 1", episode.name);
         assertEquals(Instant.ofEpochSecond(1286735400), episode.airDate);
         assertEquals(1, episode.season);
         assertEquals(1, episode.episode);
-        assertEquals(false, episode.isMovie);
+        assertFalse(episode.isMovie);
     }
 
     @Test
     public void getMovieTest() throws IOException {
-        Episode episode = client.getMovie(1);
-        assertEquals("Equestria Girls", episode.name);
-        assertEquals(Instant.ofEpochSecond(1371340800), episode.airDate);
-        assertEquals(99, episode.season);
-        assertEquals(1, episode.episode);
-        assertEquals(true, episode.isMovie);
+        Episode movie = client.getMovie(98);
+        assertNull(movie);
+        movie = client.getMovie(1);
+        assertEquals("Equestria Girls", movie.name);
+        assertEquals(Instant.ofEpochSecond(1371340800), movie.airDate);
+        assertEquals(99, movie.season);
+        assertEquals(1, movie.episode);
+        assertTrue(movie.isMovie);
     }
 
     @Test
@@ -72,7 +76,9 @@ public class PonyApiClientTest {
 
     @Test
     public void searchTest() throws IOException {
-        List<Episode> episodes = client.search("Owl's Well");
+        List<Episode> episodes = client.search("No Results");
+        assertNull(episodes);
+        episodes = client.search("Owl's Well");
         assertEquals(1, episodes.size());
         Episode episode = episodes.get(0);
         assertEquals("Owl's Well That Ends Well", episode.name);

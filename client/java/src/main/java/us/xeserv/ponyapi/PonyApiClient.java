@@ -29,7 +29,16 @@ public class PonyApiClient {
     }
 
     /**
-     * Accepts a FQDN (and optionally port) running the PonyAPI service.
+     * Accepts a FQDN and port running the PonyAPI service on a specified port.
+     * @param host a FQDN running the PonyAPI service
+     * @param port the port the PonyAPI service is running on
+     */
+    public PonyApiClient(String host, int port) {
+        this.host = host + ":" + port;
+    }
+
+    /**
+     * Accepts a FQDN running the PonyAPI service on port 80.
      * @param host a FQDN running the PonyAPI service
      */
     public PonyApiClient(String host) {
@@ -136,8 +145,11 @@ public class PonyApiClient {
         if (Strings.isNullOrEmpty(query)) {
             throw new IllegalArgumentException("A search query is required.");
         }
-        String json = asJson(get("/search?q=" + URLEncoder.encode(query, "UTF-8")));
-        return JsonDecoder.listFromJson(json);
+        HttpResponse response = get("/search?q=" + URLEncoder.encode(query, "UTF-8"));
+        if (statusCode(response) == 404) {
+            return null;
+        }
+        return JsonDecoder.listFromJson(asJson(response));
     }
 
     private HttpResponse get(String path) throws IOException {
