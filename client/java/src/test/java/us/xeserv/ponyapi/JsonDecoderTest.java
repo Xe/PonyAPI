@@ -6,8 +6,17 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class JsonDecoderTest {
+
+    @Test
+    public void malformedInputTest() {
+        assertNull(JsonDecoder.fromJson(null));
+        assertNull(JsonDecoder.fromJson(""));
+        assertNull(JsonDecoder.fromJson("{ \"error\": { \"msg\": \"some error\", \"code\": 404 }"));
+    }
 
     @Test
     public void episodeTest() {
@@ -52,6 +61,13 @@ public class JsonDecoderTest {
     }
 
     @Test
+    public void multipleMalformedInputTest() {
+        assertNull(JsonDecoder.listFromJson(null));
+        assertNull(JsonDecoder.listFromJson(""));
+        assertNull(JsonDecoder.listFromJson("{ \"error\": { \"msg\": \"some error\", \"code\": 404 }"));
+    }
+
+    @Test
     public void multipleTest() {
         String json = "{\n"
                 + "\t\"episodes\": [\n"
@@ -73,6 +89,7 @@ public class JsonDecoderTest {
                 + "}";
 
         List<Episode> episodes = JsonDecoder.listFromJson(json);
+        assertNotNull(episodes);
         assertEquals(2, episodes.size());
 
         Episode episode1 = episodes.get(0);
