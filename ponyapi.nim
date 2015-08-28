@@ -51,9 +51,10 @@ proc `%!`(why: string): JsonNode =
     }
 
 let myHeaders = {
-  "Content-Type": "application/json",
-  "X-Powered-By": "Nim and Jester",
-  "X-Git-Hash":   getEnv("GIT_REV"),
+  "Content-Type":   "application/json",
+  "X-Powered-By":   "Nim and Jester",
+  "X-Git-Hash":     getEnv("GIT_REV"),
+  "X-Server-Epoch": $ getTime().toSeconds().int,
 }
 
 settings:
