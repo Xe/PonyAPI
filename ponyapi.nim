@@ -5,6 +5,7 @@ import jester
 import json
 import os
 import random
+import stats
 import strutils
 import times
 
@@ -66,6 +67,7 @@ routes:
     "http://github.com/Xe/PonyAPI".uri.redirect
 
   get "/all":
+    stats.all.success.inc
     resp Http200, myHeaders, pretty(%%episodes, 4)
 
   get "/newest":
@@ -80,9 +82,11 @@ routes:
         ep = episode
         break
 
+    stats.newest.success.inc
     resp Http200, myHeaders, pretty(%%ep, 4)
 
   get "/random":
+    stats.newest.success.inc
     resp Http200, myHeaders, pretty(%%episodes.randomChoice(), 4)
 
   get "/last_aired":
@@ -97,6 +101,7 @@ routes:
         ep = episodes[epid-1]
         break
 
+    stats.lastAired.success.inc
     resp Http200, myHeaders, pretty(%%ep, 4)
 
   get "/season/@snumber":
@@ -105,8 +110,10 @@ routes:
       eps: seq[Episode] = lc[x | (x <- episodes, x.season == season), Episode]
 
     if eps.len == 0:
+      stats.seasonLookup.fails.inc
       resp Http404, myHeaders, pretty(%!"No episodes found", 4)
     else:
+      stats.seasonLookup.success.inc
       resp Http200, myHeaders, pretty(%%eps, 4)
 
   get "/season/@snumber/episode/@epnumber":
@@ -121,8 +128,10 @@ routes:
           ep = episode
 
     if ep.air_date == 0:
+      stats.episodeLookup.fails.inc
       resp Http404, myHeaders, pretty(%!"Not found", 4)
     else:
+      stats.episodeLookup.success.inc
       resp Http200, myHeaders, pretty(%%ep, 4)
 
   get "/search":
@@ -130,6 +139,7 @@ routes:
       query = @"q".toLower
 
     if query == "":
+      stats.search.fails.inc
       halt Http406, myHeaders, pretty(%!"Need to specify a query", 4)
 
     var
@@ -137,8 +147,22 @@ routes:
         lc[x | (x <- episodes, x.name.toLower.contains query), Episode]
 
     if eps.len == 0:
+      stats.search.fails.inc
       resp Http404, myHeaders, pretty(%!"No episodes found", 4)
     else:
+      stats.search.success.inc
       resp Http200, myHeaders, pretty(%%eps, 4)
+
+  get "/_stats":
+    resp Http200, myHeaders, pretty(%*
+      [
+        stats.all,
+        stats.newest,
+        stats.random,
+        stats.lastAired,
+        stats.seasonLookup,
+        stats.episodeLookup,
+        stats.search,
+      ], 4)
 
 runForever()
