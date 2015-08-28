@@ -76,7 +76,7 @@ Returns all information about episodes in the given season number or a `404`
 reply if no episodes could be found. To get all information about the movies
 shown, set the season as `99`.
 
-### `/season/<number>/episode/<number`
+### `/season/<number>/episode/<number>`
 
 Returns all information about the episode with the given season and episode
 number. If the episode cannot be found, this will return a `404`.
