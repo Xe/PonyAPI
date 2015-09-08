@@ -44,12 +44,16 @@ proc `%%`(eps: seq[Episode]): JsonNode =
       "episodes": eps,
     }
 
-proc `%!`(why: string): JsonNode =
+proc `%%`(why: string): JsonNode =
   ## Make an error object
   %*
     {
       "error": why
     }
+
+template httpReply(code, body: expr): expr =
+  ## Make things a lot simpler for replies, etc.
+  resp code, myHeaders, pretty(%%body, 4)
 
 let myHeaders = {
   "Content-Type":   "application/json",
@@ -68,7 +72,7 @@ routes:
 
   get "/all":
     stats.all.success.inc
-    resp Http200, myHeaders, pretty(%%episodes, 4)
+    httpReply Http200, episodes
 
   get "/newest":
     var
@@ -83,11 +87,11 @@ routes:
         break
 
     stats.newest.success.inc
-    resp Http200, myHeaders, pretty(%%ep, 4)
+    httpReply Http200, ep
 
   get "/random":
     stats.newest.success.inc
-    resp Http200, myHeaders, pretty(%%episodes.randomChoice(), 4)
+    httpReply Http200, episodes.randomChoice()
 
   get "/last_aired":
     var
@@ -102,7 +106,7 @@ routes:
         break
 
     stats.lastAired.success.inc
-    resp Http200, myHeaders, pretty(%%ep, 4)
+    httpReply Http200, ep
 
   get "/season/@snumber":
     var
@@ -111,10 +115,10 @@ routes:
 
     if eps.len == 0:
       stats.seasonLookup.fails.inc
-      resp Http404, myHeaders, pretty(%!"No episodes found", 4)
+      httpReply Http404, "No episodes found"
     else:
       stats.seasonLookup.success.inc
-      resp Http200, myHeaders, pretty(%%eps, 4)
+      httpReply Http200, eps
 
   get "/season/@snumber/episode/@epnumber":
     var
@@ -129,10 +133,10 @@ routes:
 
     if ep.air_date == 0:
       stats.episodeLookup.fails.inc
-      resp Http404, myHeaders, pretty(%!"Not found", 4)
+      httpReply Http404, "Not found"
     else:
       stats.episodeLookup.success.inc
-      resp Http200, myHeaders, pretty(%%ep, 4)
+      httpReply Http200, ep
 
   get "/search":
     var
@@ -140,7 +144,7 @@ routes:
 
     if query == "":
       stats.search.fails.inc
-      halt Http406, myHeaders, pretty(%!"Need to specify a query", 4)
+      halt Http406, myHeaders, pretty(%%"Need to specify a query", 4)
 
     var
       eps: seq[Episode] =
@@ -148,10 +152,10 @@ routes:
 
     if eps.len == 0:
       stats.search.fails.inc
-      resp Http404, myHeaders, pretty(%!"No episodes found", 4)
+      httpReply Http404, "No episodes found"
     else:
       stats.search.success.inc
-      resp Http200, myHeaders, pretty(%%eps, 4)
+      httpReply Http200, eps
 
   get "/_stats":
     resp Http200, myHeaders, pretty(%*
