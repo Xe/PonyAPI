@@ -51,9 +51,16 @@ proc `%%`(why: string): JsonNode =
       "error": why
     }
 
+proc `%`(why: string): JsonNode =
+  %%why
+
 template httpReply(code, body: expr): expr =
   ## Make things a lot simpler for replies, etc.
-  resp code, myHeaders, pretty(%%body, 4)
+  if request.headers["X-API-Options"] == "bare":
+    # New "bare" reply format, easier to scrape, etc.
+    resp code, myHeaders, pretty(%body, 4)
+  else:
+    resp code, myHeaders, pretty(%%body, 4)
 
 let myHeaders = {
   "Content-Type":   "application/json",
