@@ -56,6 +56,31 @@ $ curl http://ponyapi.apps.xeserv.us/season/1/episode/1
 }
 ```
 
+Bare Replies
+------------
+
+As of [882b5b1](https://github.com/Xe/PonyAPI/commit/882b5b155157d3a3c9e329fffcf7ff3fdf64d4ee),
+PonyAPI will accept an `X-API-Options` header that when set to `bare` will 
+return the API replies without the `episode` or `episodes` header. 
+Functionality is otherwise unchanged, however an error will still be shown if 
+something goes wrong, and that will parse differently. This API will return 
+`200` if and **only** if everything went to plan.
+
+An example:
+
+```console
+$ curl --header "X-API-Options: bare" http://ponyapi.apps.xeserv.us/last_aired
+{
+    "name": "Do Princesses Dream of Magic Sheep?",
+    "air_date": 1436628600,
+    "season": 5,
+    "episode": 13,
+    "is_movie": false
+}
+```
+
+This will also be triggered if you set the query parameter `options` to `bare`.
+
 ### `/all`
 
 Returns all information about all episodes. This returns an array of Episode
