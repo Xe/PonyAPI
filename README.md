@@ -116,3 +116,10 @@ This must be given a query paramater `q` containing the text to search for. Not
 including this will return a `406` reply. This will search the list of episode
 records for any episodes whose names match the given search terms. This is
 case-insensitive. If no episodes can be found, this will return a `404` reply.
+
+Contributing
+------------
+
+Contributions will be judged by their technical merit. No politics on project forums.
+
+All code is licensed under the MIT license.
