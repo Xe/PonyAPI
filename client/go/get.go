@@ -13,6 +13,13 @@ const (
 )
 
 func getJson(fragment string) (data []byte, err error) {
+	c := &http.Client{}
+	req := &http.Request{
+		Method: "GET",
+	}
+
+	req.Header.Add("X-API-Options", "bare")
+
 	resp, err := http.Get(endpoint + fragment)
 	if err != nil {
 		return nil, err
