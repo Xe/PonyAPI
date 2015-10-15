@@ -176,4 +176,7 @@ routes:
         stats.search,
       ], 4)
 
-runForever()
+when isMainModule:
+  runForever()
+else:
+  quit "This should not be called outside of being the main module"
