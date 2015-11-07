@@ -138,6 +138,11 @@ routes:
         if episode.episode == enumber:
           ep = episode
 
+    if @"format" == "irccmd":
+      let
+        irccmd = "/cs episode del $1 $2\n/cs episode add $1 $2 $3 $4" % [$ep.season, $ep.episode, $ep.air_date, ep.name]
+      echo irccmd
+          
     if ep.air_date == 0:
       stats.episodeLookup.fails.inc
       httpReply Http404, "Not found"
