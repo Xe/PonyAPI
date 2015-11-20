@@ -56,7 +56,7 @@ proc `%`(why: string): JsonNode =
 
 template httpReply(code, body: expr): expr =
   ## Make things a lot simpler for replies, etc.
-  if request.headers.getOrDefault("X-API-Options") == "bare" or @"options" == "bare":
+  if request.headers["X-API-Options"] == "bare" or @"options" == "bare":
     # New "bare" reply format, easier to scrape, etc.
     resp code, myHeaders, pretty(%body, 4)
   else:
