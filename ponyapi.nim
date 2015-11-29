@@ -93,6 +93,10 @@ routes:
         ep = episode
         break
 
+    if ep.season == 0:
+      stats.newest.fails.inc
+      halt Http404, "No new episode found, haitus?"
+
     stats.newest.success.inc
     httpReply Http200, ep
 
@@ -102,15 +106,13 @@ routes:
 
   get "/last_aired":
     var
-      now = getTime()
+      #now = getTime()
       ep: Episode
 
     for epid, episode in pairs[Episode](episodes):
-      var then = times.fromSeconds(episode.air_date)
-
-      if now < then:
-        ep = episodes[epid-1]
-        break
+      # XXX HACK PLEASE FIX
+      if episode.season == 5 and episode.episode == 26:
+        ep = episode
 
     stats.lastAired.success.inc
     httpReply Http200, ep
