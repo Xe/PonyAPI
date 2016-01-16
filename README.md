@@ -40,11 +40,14 @@ Clients
 Routes
 ------
 
-The canonical route base for PonyAPI is http://ponyapi.apps.xeserv.us. Example
-usage:
+The canonical route base for PonyAPI is `https://ponyapi.apps.xeserv.us`. This 
+now supports HTTP/2.0 using [Caddy](https://caddyserver.com) and SSL using 
+[Let's Encrypt](https://letsencrypt.org/). If you get SSL errors, please be 
+sure your system certificate lists are up to date.
+Example usage:
 
 ```console
-$ curl http://ponyapi.apps.xeserv.us/season/1/episode/1
+$ curl https://ponyapi.apps.xeserv.us/season/1/episode/1
 {
   "episode": {
     "air_date": 1286735400,
@@ -69,7 +72,7 @@ something goes wrong, and that will parse differently. This API will return
 An example:
 
 ```console
-$ curl --header "X-API-Options: bare" http://ponyapi.apps.xeserv.us/last_aired
+$ curl --header "X-API-Options: bare" https://ponyapi.apps.xeserv.us/last_aired
 {
     "name": "Do Princesses Dream of Magic Sheep?",
     "air_date": 1436628600,
