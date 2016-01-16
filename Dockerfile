@@ -4,7 +4,7 @@ RUN apk update && apk add bash
 
 EXPOSE 5000
 RUN adduser -D -g '' r
-RUN chmod a+x /root/.nimble/bin/nimble
+RUN chmod a+x /opt/Nim/bin/nim
 
 ADD . /app
 
