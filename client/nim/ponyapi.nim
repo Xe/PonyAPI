@@ -82,7 +82,7 @@ when isMainModule:
 
       except:
         echo getCurrentExceptionMsg()
-        fail
+        #fail
 
     test "last aired episode lookup":
       try:
