@@ -1,0 +1,13 @@
+[Unit]
+Description=PonyAPI Server listening on port 6452
+Requires=docker.service
+Restart=always
+
+[Service]
+ExecStartPre=-/usr/bin/docker pull xena/ponyapi
+ExecStartPre=-/usr/bin/docker rm -f ponyapi
+ExecStart=/usr/bin/docker run -p 6452:5000 --name ponyapi xena/ponyapi
+ExecStop=/usr/bin/docker rm -f ponyapi
+
+[Install]
+WantedBy=network.target
