@@ -28,7 +28,7 @@ Available methods:
     search(query) -> return all episodes that have query in the title
 """
 
-API_ENDPOINT = "http://ponyapi.apps.xeserv.us"
+API_ENDPOINT = "https://ponyapi.apps.xeserv.us"
 
 # _base_get :: Text -> Maybe [Text] -> (Maybe [Text] -> IO (Either Episode [Episode]))
 # _base_get takes a text, a splatted list of texts and returns a function such that

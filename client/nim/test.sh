@@ -2,4 +2,4 @@
 
 set -e
 
-nim c --hints:off -r ponyapi
+nim c -d:ssl --hints:off -r ponyapi

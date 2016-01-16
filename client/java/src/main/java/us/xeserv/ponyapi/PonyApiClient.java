@@ -153,7 +153,7 @@ public class PonyApiClient {
     }
 
     private HttpResponse get(String path) throws IOException {
-        return Request.Get("http://" + host + path)
+        return Request.Get("https://" + host + path)
                 .userAgent("PonyApi Java Client 1.0")
                 .execute()
                 .returnResponse();

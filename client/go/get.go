@@ -9,21 +9,20 @@ import (
 )
 
 const (
-	endpoint = "http://ponyapi.apps.xeserv.us"
+	endpoint = "https://ponyapi.apps.xeserv.us"
 )
 
 func getJson(fragment string) (data []byte, err error) {
 	c := &http.Client{}
-	req := &http.Request{
-		Method: "GET",
-	}
 
-	req.Header.Add("X-API-Options", "bare")
-
-	resp, err := http.Get(endpoint + fragment)
+	req, err := http.NewRequest("GET", endpoint+fragment, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	//req.Header.Add("X-API-Options", "bare")
+
+	resp, err := c.Do(req)
 
 	data, err = ioutil.ReadAll(resp.Body)
 	if err != nil {

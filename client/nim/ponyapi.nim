@@ -14,7 +14,7 @@ type
     is_movie*: bool ## does this record represent a movie?
 
 const
-  API_ENDPOINT: string = "http://ponyapi.apps.xeserv.us"
+  API_ENDPOINT: string = "https://ponyapi.apps.xeserv.us"
 
 proc getJson(endpoint: string): json.JsonNode =
   ## get the HTTP body for the API base endpoint catted with the specific endpoint
