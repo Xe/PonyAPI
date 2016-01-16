@@ -95,7 +95,7 @@ routes:
 
     if ep.season == 0:
       stats.newest.fails.inc
-      halt Http404, "No new episode found, haitus?"
+      halt Http404, "No new episode found, hiatus?"
 
     stats.newest.success.inc
     httpReply Http200, ep
