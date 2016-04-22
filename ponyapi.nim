@@ -106,13 +106,15 @@ routes:
 
   get "/last_aired":
     var
-      #now = getTime()
+      now = getTime()
       ep: Episode
 
     for epid, episode in pairs[Episode](episodes):
-      # XXX HACK PLEASE FIX
-      if episode.season == 5 and episode.episode == 26:
-        ep = episode
+      var then = times.fromSeconds(episode.air_date)
+
+      if now < then:
+        ep = episodes[epid-1]
+        break
 
     stats.lastAired.success.inc
     httpReply Http200, ep
@@ -144,7 +146,7 @@ routes:
       let
         irccmd = "/cs episode del $1 $2\n/cs episode add $1 $2 $3 $4" % [$ep.season, $ep.episode, $ep.air_date, ep.name]
       echo irccmd
-          
+
     if ep.air_date == 0:
       stats.episodeLookup.fails.inc
       httpReply Http404, "Not found"
