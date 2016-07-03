@@ -1,6 +1,7 @@
 import asyncdispatch
 import episode
 import future
+import httpcore
 import jester
 import json
 import os
@@ -58,16 +59,9 @@ template httpReply(code, body: expr): expr =
   ## Make things a lot simpler for replies, etc.
   if request.headers.getOrDefault("X-API-Options") == "bare" or @"options" == "bare":
     # New "bare" reply format, easier to scrape, etc.
-    resp code, myHeaders, pretty(%body, 4)
+    resp code, "application/json", pretty(%body, 4)
   else:
-    resp code, myHeaders, pretty(%%body, 4)
-
-let myHeaders = {
-  "Content-Type":   "application/json",
-  "X-Powered-By":   "Nim and Jester",
-  "X-Git-Hash":     getEnv("GIT_REV"),
-  "X-Server-Epoch": $ getTime().toSeconds().int,
-}
+    resp code, "application/json", pretty(%%body, 4)
 
 settings:
   port = 5000.Port
@@ -102,7 +96,7 @@ routes:
 
   get "/random":
     stats.newest.success.inc
-    httpReply Http200, episodes.randomChoice()
+    httpReply Http200, episodes[epochTime().int mod len(episodes)]
 
   get "/last_aired":
     var
@@ -160,7 +154,7 @@ routes:
 
     if query == "":
       stats.search.fails.inc
-      halt Http406, myHeaders, pretty(%%"Need to specify a query", 4)
+      halt Http406, pretty(%%"Need to specify a query", 4)
 
     var
       eps: seq[Episode] =
@@ -174,7 +168,7 @@ routes:
       httpReply Http200, eps
 
   get "/_stats":
-    resp Http200, myHeaders, pretty(%*
+    resp Http200, pretty(%*
       [
         stats.all,
         stats.newest,
