@@ -1,4 +1,4 @@
-FROM coopernurse/docker-nim
+FROM xena/nim:0.14.2
 
 RUN apk update && apk add bash
 
