@@ -59,9 +59,9 @@ template httpReply(code, body: expr): expr =
   ## Make things a lot simpler for replies, etc.
   if request.headers.getOrDefault("X-API-Options") == "bare" or @"options" == "bare":
     # New "bare" reply format, easier to scrape, etc.
-    resp code, "application/json", pretty(%body, 4)
+    resp code, pretty(%body, 4), "application/json"
   else:
-    resp code, "application/json", pretty(%%body, 4)
+    resp code, pretty(%%body, 4), "application/json"
 
 settings:
   port = 5000.Port
