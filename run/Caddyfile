@@ -1,7 +1,0 @@
-ponyapi.apps.xeserv.us {
-	log syslog
-
-	proxy / http://127.0.0.1:6452 {
-		proxy_header Host {host}
-	}
-}
