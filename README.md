@@ -1,6 +1,8 @@
 PonyAPI
 =======
 
+[![Build Status](http://drone.greedo.xeserv.us/api/badges/xena/PonyAPI/status.svg)](http://drone.greedo.xeserv.us/xena/PonyAPI)
+
 A simple API for episodes of My Little Pony: Friendship is Magic to be run
 inside a container.
 
@@ -40,9 +42,9 @@ Clients
 Routes
 ------
 
-The canonical route base for PonyAPI is `https://ponyapi.apps.xeserv.us`. This 
-now supports HTTP/2.0 using [Caddy](https://caddyserver.com) and SSL using 
-[Let's Encrypt](https://letsencrypt.org/). If you get SSL errors, please be 
+The canonical route base for PonyAPI is `https://ponyapi.apps.xeserv.us`. This
+now supports HTTP/2.0 using [Caddy](https://caddyserver.com) and SSL using
+[Let's Encrypt](https://letsencrypt.org/). If you get SSL errors, please be
 sure your system certificate lists are up to date.
 Example usage:
 
@@ -63,10 +65,10 @@ Bare Replies
 ------------
 
 As of [882b5b1](https://github.com/Xe/PonyAPI/commit/882b5b155157d3a3c9e329fffcf7ff3fdf64d4ee),
-PonyAPI will accept an `X-API-Options` header that when set to `bare` will 
-return the API replies without the `episode` or `episodes` header. 
-Functionality is otherwise unchanged, however an error will still be shown if 
-something goes wrong, and that will parse differently. This API will return 
+PonyAPI will accept an `X-API-Options` header that when set to `bare` will
+return the API replies without the `episode` or `episodes` header.
+Functionality is otherwise unchanged, however an error will still be shown if
+something goes wrong, and that will parse differently. This API will return
 `200` if and **only** if everything went to plan.
 
 An example:
