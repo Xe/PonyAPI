@@ -10,8 +10,9 @@ ADD . /app
 
 WORKDIR /app
 RUN nimble update &&\
+    yes | nimble build &&\
     yes | nimble install &&\
-    nim c -d:release --deadCodeElim:on ponyapi
+    cp ~/.nimble/bin/ponyapi /usr/bin/ponyapi
 
 USER r
-CMD ./ponyapi
+CMD /usr/bin/ponyapi
