@@ -4,7 +4,7 @@ build:
     - nimble refresh
     - yes | nimble install
     - cd client/nim
-    - ./test.sh
+    - bash ./test.sh
 
 deploy:
   git_push:
