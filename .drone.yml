@@ -1,0 +1,5 @@
+build:
+  image: xena/nim:0.14.2
+  commands:
+    - nimble refresh
+    - yes | nimble install
