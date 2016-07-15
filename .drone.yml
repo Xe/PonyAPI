@@ -10,3 +10,12 @@ deploy:
   git_push:
     branch: master
     remote: git@github.com:Xe/PonyAPI.git
+
+  ssh:
+    host: greedo.xeserv.us
+    user: xena
+    port: 22
+    commands:
+      - cd ~/code/ponyapi
+      - docker-compose build
+      - docker-compose up -d
