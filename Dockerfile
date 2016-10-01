@@ -1,15 +1,10 @@
 FROM xena/nim:0.15.0
 
-EXPOSE 5000
-RUN adduser -D -g '' r
+ENV BACKPLANE_PROXY_URL http://127.0.0.1:5000
 
-ADD . /app
-
+COPY . /app
 WORKDIR /app
 RUN nimble update &&\
-    yes | nimble build &&\
-    yes | nimble install &&\
-    cp ~/.nimble/bin/ponyapi /usr/bin/ponyapi
+    yes | nimble build
 
-USER r
-CMD /usr/bin/ponyapi
+CMD ./ponyapi
