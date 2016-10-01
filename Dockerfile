@@ -1,10 +1,7 @@
-FROM xena/nim:0.14.2
-
-RUN apk update && apk add bash
+FROM xena/nim:0.15.0
 
 EXPOSE 5000
 RUN adduser -D -g '' r
-RUN chmod a+x /opt/Nim/bin/nim
 
 ADD . /app
 
