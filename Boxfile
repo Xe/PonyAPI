@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+# This is a manifest designed to be used with box[1]. Build it using:
+#
+#    $ box Boxfile
+#
+# [1]: https://github.com/erikh/box
+
+from "xena/nim:0.15.2"
+
+env "BACKPLANE_PROXY_URL" => "http://127.0.0.1:5000"
+
+copy "ponyapi.nimble", "/app/ponyapi.nimble"
+copy "src",            "/app/"
+copy "public",         "/app/"
+copy "fim.list",       "/app/fim.list"
+
+workdir "/app"
+run "nimble update && yes | nimble build"
+
+cmd "./ponyapi"
+
+tag "xena/ponyapi"

@@ -1,4 +1,4 @@
-FROM xena/nim:0.15.0
+FROM xena/nim:0.15.2
 
 ENV BACKPLANE_PROXY_URL http://127.0.0.1:5000
 
