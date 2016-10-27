@@ -1,14 +1,5 @@
-import asyncdispatch
-import episode
-import future
-import httpcore
-import jester
-import json
-import os
-import random
-import stats
-import strutils
-import times
+import asyncdispatch, episode, future, httpcore, jester,
+       json, os, random, stats, strutils, times
 
 var
   episodes: seq[Episode]
