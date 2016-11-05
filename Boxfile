@@ -21,4 +21,8 @@ run "nimble update && yes | nimble build"
 
 cmd "./ponyapi"
 
+run %q[rm -rf /root/.nimble /opt && apk del libc-dev gcc curl libgcc git perl xz tar]
+
+flatten
+
 tag "xena/ponyapi"
