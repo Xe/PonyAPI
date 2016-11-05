@@ -19,10 +19,13 @@ copy "fim.list",       "/app/fim.list"
 workdir "/app"
 run "nimble update && yes | nimble build"
 
+entrypoint "/entrypoint.sh"
 cmd "./ponyapi"
 
-run %q[rm -rf /root/.nimble /opt && apk del libc-dev gcc curl libgcc git perl xz tar]
+run %q[rm -rf /root/.nimble /opt ./src/nimcache && apk del libc-dev gcc curl libgcc git perl xz tar]
 
 flatten
+
+run "apk add --no-cache pcre"
 
 tag "xena/ponyapi"
