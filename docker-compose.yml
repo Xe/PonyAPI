@@ -1,8 +1,0 @@
-version: "2"
-
-services:
-  ponyapi:
-    build: .
-    ports:
-      - "6452:5000"
-    restart: always
