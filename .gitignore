@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io
 
+.env
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
