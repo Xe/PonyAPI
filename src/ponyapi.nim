@@ -1,5 +1,5 @@
-import asyncdispatch, episode, future, httpcore, jester,
-       json, os, random, stats, strutils, times
+import asyncdispatch, ponyapipkg/episode, future, httpcore, jester,
+       json, os, random, ponyapipkg/stats, strutils, times
 
 var
   episodes: seq[Episode]
