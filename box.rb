@@ -21,11 +21,13 @@ copy "fim.list",       "/app/fim.list"
 
 run "cd /app && nimble update && yes | nimble build"
 
-run %q[ rm -rf /root/.nimble /opt ./src/nimcache && apk del libc-dev gcc curl libgcc git perl xz tar nim-compiler-deps ]
+run %q[ rm -rf /root/.nimble /opt ./src/nimcache && apk del libc-dev gcc curl libgcc git perl xz tar nim-compiler-deps && apk add --no-cache pcre ]
 
 flatten
 
-run "apk add --no-cache pcre backplane-runit route-mesh-runit"
+tag "xena/ponyapi:slim"
+
+run "apk add --no-cache backplane-runit route-mesh-runit"
 cmd "/run.sh"
 
 tag "xena/ponyapi"
