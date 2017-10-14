@@ -54,8 +54,16 @@ template httpReply(code, body: expr): expr =
   else:
     resp code, pretty(%%body, 4), "application/json"
 
+let ePort = getEnv "PORT"
+var resPort: int
+
+if ePort == "":
+  resPort = 5000
+else:
+  resport = eport.parseInt
+
 settings:
-  port = 5000.Port
+  port = resPort.Port
   bindAddr = "0.0.0.0"
 
 routes:

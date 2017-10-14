@@ -11,6 +11,7 @@ from "xena/nim:0.17.2"
 
 env "BACKPLANE_PROXY_URL" => "http://127.0.0.1:5000"
 env "ROUTE_BACKEND" => "http://127.0.0.1:5000"
+env "PORT" => "5000"
 
 copy "run.sh",         "/run.sh"
 copy "ponyapi.nimble", "/app/ponyapi.nimble"
