@@ -49,7 +49,7 @@ public class PonyApiClientTest {
         Episode episode = client.getEpisode(98, 1);
         assertNull(episode);
         episode = client.getEpisode(1, 1);
-        assertEquals("Friendship is Magic Part 1", episode.name);
+        assertEquals("Friendship is Magic (Part 1)", episode.name);
         assertEquals(Instant.ofEpochSecond(1286735400), episode.airDate);
         assertEquals(1, episode.season);
         assertEquals(1, episode.episode);

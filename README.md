@@ -16,7 +16,7 @@ An episode will have the following data type:
       "air_date": 1286735400,
       "episode": 1,
       "is_movie": false,
-      "name": "Friendship is Magic Part 1",
+      "name": "Friendship is Magic (Part 1)",
       "season": 1
 }
 ```
@@ -55,7 +55,7 @@ $ curl https://ponyapi.apps.xeserv.us/season/1/episode/1
     "air_date": 1286735400,
     "episode": 1,
     "is_movie": false,
-    "name": "Friendship is Magic Part 1",
+    "name": "Friendship is Magic (Part 1)",
     "season": 1
   }
 }

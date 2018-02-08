@@ -23,7 +23,7 @@ public class JsonDecoderTest {
         String json = "{\n"
                 + "\t\"episode\":\n"
                 + "\t{\n"
-                + "\t\t\"name\": \"Friendship is Magic Part 1\",\n"
+                + "\t\t\"name\": \"Friendship is Magic (Part 1)\",\n"
                 + "\t\t\"air_date\": 1286735400,\n"
                 + "\t\t\"season\": 1,\n"
                 + "\t\t\"episode\": 1,\n"
@@ -32,7 +32,7 @@ public class JsonDecoderTest {
                 + "}";
 
         Episode episode = JsonDecoder.fromJson(json);
-        assertEquals("Friendship is Magic Part 1", episode.name);
+        assertEquals("Friendship is Magic (Part 1)", episode.name);
         assertEquals(Instant.ofEpochSecond(1286735400), episode.airDate);
         assertEquals(1, episode.season);
         assertEquals(1, episode.episode);
@@ -72,7 +72,7 @@ public class JsonDecoderTest {
         String json = "{\n"
                 + "\t\"episodes\": [\n"
                 + "\t\t{\n"
-                + "\t\t\t\"name\": \"Friendship is Magic Part 1\",\n"
+                + "\t\t\t\"name\": \"Friendship is Magic (Part 1)\",\n"
                 + "\t\t\t\"air_date\": 1286735400,\n"
                 + "\t\t\t\"season\": 1,\n"
                 + "\t\t\t\"episode\": 1,\n"
@@ -93,7 +93,7 @@ public class JsonDecoderTest {
         assertEquals(2, episodes.size());
 
         Episode episode1 = episodes.get(0);
-        assertEquals("Friendship is Magic Part 1", episode1.name);
+        assertEquals("Friendship is Magic (Part 1)", episode1.name);
         assertEquals(Instant.ofEpochSecond(1286735400), episode1.airDate);
         assertEquals(1, episode1.season);
         assertEquals(1, episode1.episode);
