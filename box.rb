@@ -7,7 +7,7 @@
 #
 # [1]: https://github.com/erikh/box
 
-from "xena/nim:0.17.2"
+from "xena/nim:0.18.0"
 
 env "BACKPLANE_PROXY_URL" => "http://127.0.0.1:5000"
 env "ROUTE_BACKEND" => "http://127.0.0.1:5000"
